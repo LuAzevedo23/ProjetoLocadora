@@ -1,0 +1,5 @@
+rootProject.name = 'ProjetoLocadora'
+
+include ':app'
+include ':lib'
+
