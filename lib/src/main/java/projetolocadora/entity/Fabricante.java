@@ -12,10 +12,22 @@ public class Fabricante {
     
     private int id;
     private String fabricante;
-    
-    public int getId(){
+   
+    public int getId() {
         return id;
-    
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFabricante() {
+        return fabricante;
+    }
+
+    public void setFabricante(String fabricante) {
+        this.fabricante = fabricante;
+    }
     
     
     }
@@ -23,7 +35,7 @@ public class Fabricante {
 
     
             
-        }
+       
     
     
 
