@@ -4,6 +4,7 @@
  */
 package projetolocadora.gui.cadastro;
 
+import java.awt.Frame;
 import javax.swing.JOptionPane;
 import projetolocadora.dao.FabricanteDAO;
 import projetolocadora.entity.Fabricante;
@@ -26,7 +27,7 @@ public class CadastroFabricanteEditarGUI extends javax.swing.JDialog {
      */
     public CadastroFabricanteEditarGUI(Frame parent, boolean modal) {
         super(parent, modal);
-        parentDialog = dialogParent;
+        parentDialog = new CadastroFabricanteGUI(parent, false);
         initComponents();
     }
     
