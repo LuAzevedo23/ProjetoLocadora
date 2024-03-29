@@ -5,7 +5,7 @@
 package projetolocadora.gui.cadastro;
 
 import java.util.List;
-import javax.swing.event.TableModelListener;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import projetolocadora.dao.FabricanteDAO;
@@ -17,12 +17,12 @@ import projetolocadora.entity.Fabricante;
  */
 public class CadastroFabricanteGUI extends javax.swing.JDialog {
 
-    FabricanteDAO dao = new FabricanteDAO();
+    private FabricanteDAO dao = new FabricanteDAO();
 
     public CadastroFabricanteGUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         carregarLista();
     }
 
@@ -40,7 +40,13 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
             i++;
         }
 
-        TableModel model = new DefaultTableModel(dados, new Object[]{"ID", "FABRICANTE"});
+        TableModel model = new DefaultTableModel(dados, new Object[]{"ID", "FABRICANTE"}) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
         tblFabricante.setModel(model);
 
     }
@@ -71,8 +77,18 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         brnExcluir.setText("Excluir");
+        brnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brnExcluirActionPerformed(evt);
+            }
+        });
 
         btnFechar.setText("Fechar");
         btnFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -92,60 +108,75 @@ public class CadastroFabricanteGUI extends javax.swing.JDialog {
 
             }
         ));
+        jScrollPane1.setViewportView(tblFabricante);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(btnAdicionar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(brnExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnFechar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                        .addComponent(btnFechar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(tblFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap(10, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
                     .addComponent(brnExcluir)
                     .addComponent(btnAdicionar)
                     .addComponent(btnFechar))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(tblFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        // TODO add your handling code here:
+        CadastroFabricanteEditarGUI dialog = new CadastroFabricanteEditarGUI(null, true);
+        dialog.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        CadastroFabricanteEditarGUI dialog = new CadastroFabricanteEditarGUI(null, true);
+        dialog.carregarFabricante((Integer) tblFabricante.getModel().getValueAt(tblFabricante.getSelectedRow(), 0));
+        dialog.setVisible(true);
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void brnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnExcluirActionPerformed
+        int id = (Integer) tblFabricante.getModel().getValueAt(tblFabricante.getSelectedRow(), 0);
+
+        try {
+            dao.delete(id);
+
+            JOptionPane.showMessageDialog(this, "Fabricante Excluído com Sucesso!!!", "SUCESSO!", JOptionPane.INFORMATION_MESSAGE);
+
+            carregarLista();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_brnExcluirActionPerformed
 
     /**
      * @param args the command line arguments

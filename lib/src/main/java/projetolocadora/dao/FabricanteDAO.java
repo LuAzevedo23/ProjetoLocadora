@@ -17,6 +17,67 @@ import projetolocadora.entity.Fabricante;
  */
 public class FabricanteDAO {
 
+    public int insert(String fabricante) {
+        String query = String.format("""
+                   INSERT INTO fabricante (fabricante) VALUES ('%s');
+                   """, fabricante);
+
+        try (Statement stmt = Conexao.getConn().createStatement();) {
+            return stmt.executeUpdate(query);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int update(int id, String fabricante) {
+        String query = String.format("""
+                       UPDATE fabricante 
+                        SET 
+                          fabricante = '%s'
+                        WHERE id=%d;
+                        """, fabricante, id);
+
+        try (Statement stmt = Conexao.getConn().createStatement();) {
+            return stmt.executeUpdate(query);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int delete(int id) {
+        String query = String.format("""
+                       DELETE FROM fabricante                  
+                        WHERE id=%d;
+                        """, id);
+
+        try (Statement stmt = Conexao.getConn().createStatement();) {
+            return stmt.executeUpdate(query);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Fabricante select(int id) {
+        String query = String.format("""
+                   SELECT * FROM fabricante WHERE id = %d;
+                   """, id);
+
+        try (Statement stmt = Conexao.getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next()) {
+                Fabricante fabricante = new Fabricante();
+                fabricante.setId(rs.getInt("id"));
+                fabricante.setFabricante(rs.getString("fabricante"));
+
+                return fabricante;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+        return null;
+    }
     public List<Fabricante> select() {
         List<Fabricante> listaFabricante = new ArrayList<>();
 
